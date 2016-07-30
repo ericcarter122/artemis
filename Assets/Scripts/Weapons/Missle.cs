@@ -2,29 +2,47 @@
 
 public class Missle : Weapon {
 
-    public enum Targeting { heat, radar };
+    public enum TargetingType { heat, radar };
 
+    [Range(0.0F, 1000.0F)]
     public float thrust;
-    public Targeting targeting;
+
+    [Range(0.0F, 100.0F)]
+    public float blastRadius;
+
+    [Range(0.0F, 5.0F)]
+    public float fuel;
+
+    public ParticleSystem smoke;
+
+    public TargetingType targetingType;
     
-    
-    private Rigidbody rb;
-    private bool fired = false;
+    Rigidbody rb;
+    FixedJoint hardpoint;
+
+    bool fired = false;
 
     public override void Fire() {
+        Destroy (hardpoint);
+        rb.AddForce(-transform.up * thrust);
+        smoke.Play();
         fired = true;
     }
 
     void Start() {
         rb = GetComponent<Rigidbody>();
+        hardpoint = GetComponent<FixedJoint>();
     }
 
     void FixedUpdate() {
-
-        if (!fired) {
-            return;
+        if (fired) {
+            transform.LookAt(target.transform.position);
+            rb.AddForce(transform.forward * thrust);
+            fuel -= 0.001F;
         }
 
-        rb.AddForce(transform.forward * thrust);
+        if (fired && Vector3.Distance(transform.position, target.transform.position) <= blastRadius) {
+            Destroy (this.gameObject);
+        }
     }
 }

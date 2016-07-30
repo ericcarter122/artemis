@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HUD : MonoBehaviour {
 
-    public Texture texture;
+    public Transform progradeVector;
 
     private Targeting targeting;
     private Navigation nav;
@@ -21,6 +21,10 @@ public class HUD : MonoBehaviour {
 	
 	}
 
+    void FixedUpdate() {
+        progradeVector.position = transform.position + rb.velocity.normalized * 10;
+    }
+
     void OnGUI() {
 
         GUILayout.Label("ANG: " + nav.angle + " deg");
@@ -31,8 +35,5 @@ public class HUD : MonoBehaviour {
         GUILayout.Label("Targets: " + targeting.targets.Count);
 
         GUILayout.Label("DIS: " + nav.distance);
-
-        GUI.DrawTexture(new Rect(200, 200, 60, 60), texture);
-        
     }
 }

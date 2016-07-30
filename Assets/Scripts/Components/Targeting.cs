@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Targeting : MonoBehaviour {
@@ -13,6 +14,8 @@ public class Targeting : MonoBehaviour {
 
     public List<GameObject> targets { get; set; }
 
+    Weapons weapons;
+
     //private int targetIndex = 0;
 
     //private float nextPress = 0.0F;
@@ -20,11 +23,14 @@ public class Targeting : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        weapons = GetComponent<Weapons>();
         targets = new List<GameObject>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        weapons.target = target;
 
         //bool nextTarget = Input.GetButton("Next Target");
 
