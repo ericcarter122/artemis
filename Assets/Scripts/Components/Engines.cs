@@ -3,7 +3,10 @@ using System.Collections;
 
 public class Engines : MonoBehaviour {
 
+    [Range(0.0F, 1.0F)]
     public float thrust;
+
+    [Range(0.0F, 1.0F)]
     public float angularThrust;
 
     Rigidbody rb;

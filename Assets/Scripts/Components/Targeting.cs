@@ -4,7 +4,12 @@ using System.Collections.Generic;
 public class Targeting : MonoBehaviour {
 
     public GameObject target;
+
+    [Range(0.0F, 1000.0F)]
     public float radarRadius;
+
+    [Range(30.0F, 300.0F)]
+    public float radarFrequency;
 
     public List<GameObject> targets { get; set; }
 
