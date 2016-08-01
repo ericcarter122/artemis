@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Navigation : MonoBehaviour {
 
-    public Transform station;
+	public Transform reference { get; set; }
     public Vector3 angle { get; set; }
     public float distance { get; set; }
 
@@ -15,11 +15,21 @@ public class Navigation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		distance = Vector3.Distance(station.position, transform.position);
+		if (reference != null) {
 
-        angle = new Vector3(
-        	Vector3.Angle(transform.right, station.right),
-        	Vector3.Angle(transform.forward, station.forward),
-        	Vector3.Angle(transform.up, station.up));
+			distance = Vector3.Distance (reference.position, transform.position);
+
+			Vector3 newAngle = new Vector3 ();
+
+			newAngle.x = Vector3.Angle (transform.right, reference.right);
+			newAngle.y = Vector3.Angle (transform.forward, reference.forward);
+			newAngle.z = Vector3.Angle (transform.up, reference.up);
+
+			angle = newAngle;
+
+		} else {
+			angle = new Vector3 ();
+			distance = 0;
+		}
     }
 }

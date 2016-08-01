@@ -4,57 +4,31 @@ using System.Collections.Generic;
 
 public class Targeting : MonoBehaviour {
 
-    public GameObject target;
+	public LayerMask layerMask;
 
     [Range(0.0F, 1000.0F)]
     public float radarRadius;
 
-    [Range(30.0F, 300.0F)]
-    public float radarFrequency;
-
-    public List<GameObject> targets { get; set; }
-
-    Weapons weapons;
-
-    //private int targetIndex = 0;
-
-    //private float nextPress = 0.0F;
-    //private float pressRate = 0.1F;
+	public GameObject[] targets { get; set; }
+	public GameObject target { get; set; }
 
 	// Use this for initialization
 	void Start () {
-        weapons = GetComponent<Weapons>();
-        targets = new List<GameObject>();
+		targets = new GameObject[0];
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        weapons.target = target;
+	void FixedUpdate() {
+		
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, radarRadius);
+		targets = new GameObject[hitColliders.Length];
 
-        //bool nextTarget = Input.GetButton("Next Target");
-
-        //// Check if target is changed
-        //if (nextTarget && targets.Count > 0 && Time.time > nextPress) {
-
-        //    nextPress = Time.time + pressRate;
-        //    int nextIndex = targetIndex++;
-
-        //    if (nextIndex == targets.Count) {
-        //        nextIndex = 0;
-        //        targetIndex = nextIndex;
-        //    }
-
-        //    target = targets[nextIndex];
-        //}
-	}
-
-    void FixedUpdate() {
-        targets.Clear();
-
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radarRadius);
         for (int i = 0; i < hitColliders.Length; i++) {
-            targets.Add(hitColliders[i].gameObject);
+            targets[i] = hitColliders[i].gameObject;
         }
     }
+
+	void OnDrawGizmosSelected() {
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere (transform.position, radarRadius);
+	}
 }

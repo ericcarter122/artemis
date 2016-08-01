@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{95630CEF-ED3D-C257-8222-C6219F8E069F}") = "Artemis", "Assembly-CSharp.csproj", "{E13E8FAB-B30D-5FE4-73C1-EEA72B4B3F26}"
+Project("{01DAC4A9-AFA6-5615-65D1-0B5B16E9DCDB}") = "artemis", "Assembly-CSharp.csproj", "{E7B0F7E4-ABBD-E9D0-9B82-2A6F0F56F79A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E13E8FAB-B30D-5FE4-73C1-EEA72B4B3F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E13E8FAB-B30D-5FE4-73C1-EEA72B4B3F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E13E8FAB-B30D-5FE4-73C1-EEA72B4B3F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E13E8FAB-B30D-5FE4-73C1-EEA72B4B3F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7B0F7E4-ABBD-E9D0-9B82-2A6F0F56F79A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7B0F7E4-ABBD-E9D0-9B82-2A6F0F56F79A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7B0F7E4-ABBD-E9D0-9B82-2A6F0F56F79A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7B0F7E4-ABBD-E9D0-9B82-2A6F0F56F79A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,5 +36,4 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
-
 EndGlobal

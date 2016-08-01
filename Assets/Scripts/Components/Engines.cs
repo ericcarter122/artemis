@@ -9,6 +9,8 @@ public class Engines : MonoBehaviour {
     [Range(0.0F, 10000.0F)]
     public float angularThrust;
 
+	public float maxSpeed;
+
     Rigidbody rb;
 
     float horizontal;
@@ -36,10 +38,11 @@ public class Engines : MonoBehaviour {
 	
 	// Used for rigidbody physics calculations
 	void FixedUpdate () {
-
-        rb.AddForce(transform.right * horizontal * thrust);
-        rb.AddForce(transform.up * lateral * thrust);
-        rb.AddForce(transform.forward * vertical * thrust);
+		if (rb.velocity.magnitude < maxSpeed) {
+			rb.AddForce (transform.right * horizontal * thrust);
+			rb.AddForce (transform.up * lateral * thrust);
+			rb.AddForce (transform.forward * vertical * thrust);
+		}
 
         rb.AddTorque(transform.right * pitch * angularThrust);
         rb.AddTorque(transform.up * yaw * angularThrust);
