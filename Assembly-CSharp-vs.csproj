@@ -47,11 +47,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Components\Engines.cs" />
-     <Compile Include="Assets\Scripts\Components\HUD.cs" />
-     <Compile Include="Assets\Scripts\Components\Navigation.cs" />
      <Compile Include="Assets\Scripts\Components\Shields.cs" />
-     <Compile Include="Assets\Scripts\Components\Targeting.cs" />
-     <Compile Include="Assets\Scripts\Components\Weapons.cs" />
+     <Compile Include="Assets\Scripts\Docking\MagneticLock.cs" />
+     <Compile Include="Assets\Scripts\Input\InputController.cs" />
+     <Compile Include="Assets\Scripts\Navigation\Navigation.cs" />
+     <Compile Include="Assets\Scripts\Navigation\TowerBeacon.cs" />
+     <Compile Include="Assets\Scripts\Targeting\Infrared.cs" />
+     <Compile Include="Assets\Scripts\Targeting\Radar.cs" />
      <Compile Include="Assets\Scripts\Weapons\LaserWeapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\Missle.cs" />
      <Compile Include="Assets\Scripts\Weapons\Projectile.cs" />

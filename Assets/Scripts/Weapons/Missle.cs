@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(ParticleSystem))]
 public class Missle : Weapon {
 
     public enum TargetingType { heat, radar };
@@ -14,7 +15,6 @@ public class Missle : Weapon {
     public float fuel;
 
     public ParticleSystem smoke;
-
     public TargetingType targetingType;
     
     Rigidbody rb;

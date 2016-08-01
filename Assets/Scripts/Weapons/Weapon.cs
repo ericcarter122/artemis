@@ -4,7 +4,9 @@ public abstract class Weapon : MonoBehaviour {
 
     public float range;
     public float damage;
-    public GameObject target { get; set; }
+
+    [HideInInspector]
+    public GameObject target;
 
     public abstract void Fire();
 }
