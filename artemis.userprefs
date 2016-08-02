@@ -1,9 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Render\RadarRender.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Weapons\Projectile.cs">
     <Files>
-      <File FileName="Assets\Scripts\Components\Targeting.cs" Line="26" Column="53" />
-      <File FileName="Assets\Scripts\Render\RadarRender.cs" Line="44" Column="69" />
+      <File FileName="Assets\Scripts\Weapons\Weapons.cs" Line="13" Column="21" />
+      <File FileName="Assets\Scripts\Weapons\ProjectileWeapon.cs" Line="29" Column="42" />
+      <File FileName="Assets\Scripts\Weapons\Projectile.cs" Line="34" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

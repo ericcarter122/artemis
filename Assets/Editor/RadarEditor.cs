@@ -13,7 +13,9 @@ public class RadarEditor : Editor {
 		Handles.DrawWireArc(radar.transform.position, Vector3.up, Vector3.forward, 360, radar.range);
 
 		foreach (Transform radarTarget in radar.radarTargets) {
-			Handles.DrawLine(radar.transform.position, radarTarget.position);
+			if (radarTarget != null) {
+				Handles.DrawLine (radar.transform.position, radarTarget.position);
+			}
 		}
 	}
 }

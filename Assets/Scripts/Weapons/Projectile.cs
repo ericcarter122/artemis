@@ -1,17 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour {
 
-    public float speed;
+	[HideInInspector]
+	public float speed;
 
-    // Use this for initialization
-    void Start () {
+	[HideInInspector]
+	public float range;
 
+	[HideInInspector]
+	public float damage;
+
+	Vector3 startPosition;
+	Rigidbody rb;
+
+	void Start() {
+		startPosition = transform.position;
+		rb = GetComponent<Rigidbody> ();
+		rb.velocity += transform.forward * speed;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-        transform.position += transform.forward * speed;
+		if (transform.position.magnitude >= (startPosition).magnitude + range) {
+			Destroy (gameObject);
+		}
+	}
+
+	void OnCollisionEnter(Collision target) {
+		// Add damage to the target
+		Destroy (gameObject);
 	}
 }
