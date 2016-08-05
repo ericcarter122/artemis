@@ -1,33 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody))]
 public class ProjectileWeapon : Weapon {
 
+
     public float fireRate;
-	public float speed;
 	public int ammunition;
-	public GameObject projectile;
+	public Transform barrel;
+	public ParticleSystem tracer;
+	public float tracerDuration;
 
-	Rigidbody rb;
 	float nextFire = 0.0F;
-
-	void Start() {
-		rb = GetComponent<Rigidbody> ();
-	}
+	bool tracerRunning = false;
 
 	public override void Fire() {
 		if (ammunition > 0 && nextFire < Time.time) {
-			GameObject clone = Instantiate (projectile, transform.position, transform.rotation) as GameObject;
 
-			Projectile cloneProjectile = clone.GetComponent<Projectile> ();
-			cloneProjectile.range = range;
-			cloneProjectile.damage = damage;
-			cloneProjectile.speed = speed;
-			cloneProjectile.GetComponent<Rigidbody>().velocity += rb.velocity;
+			if (!tracerRunning) {
+				StartCoroutine (PlayTracer ());
+			}
 
-			nextFire = Time.time + (60 / fireRate);
+			RaycastHit hit;
+			if (Physics.Raycast(barrel.position, transform.forward, out hit, range)) {
+
+				if (hit.rigidbody != null) {
+					Vector3 direction = hit.rigidbody.transform.position - transform.position;
+					hit.rigidbody.AddForceAtPosition (direction.normalized * damage, hit.point);
+				}
+
+				print ("Hit object - dis: " + hit.distance);
+			}
+
+			nextFire = Time.time + fireRate;
 			ammunition--;
 		}
+	}
+
+	IEnumerator PlayTracer() {
+		tracerRunning = true;
+		tracer.Play ();
+		yield return new WaitForSeconds (tracerDuration);
+		tracer.Stop ();
+		tracerRunning = false;
 	}
 }

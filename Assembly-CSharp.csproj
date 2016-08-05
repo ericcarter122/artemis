@@ -49,14 +49,14 @@
      <Compile Include="Assets\Scripts\Components\Shields.cs" />
      <Compile Include="Assets\Scripts\Docking\MagneticLock.cs" />
      <Compile Include="Assets\Scripts\Input\InputController.cs" />
-     <Compile Include="Assets\Scripts\Jammer.cs" />
+     <Compile Include="Assets\Scripts\Jamming\Jammer.cs" />
+     <Compile Include="Assets\Scripts\Lighting\LaunchTube.cs" />
      <Compile Include="Assets\Scripts\Navigation\Navigation.cs" />
      <Compile Include="Assets\Scripts\Navigation\TowerBeacon.cs" />
      <Compile Include="Assets\Scripts\Targeting\Infrared.cs" />
      <Compile Include="Assets\Scripts\Targeting\Radar.cs" />
      <Compile Include="Assets\Scripts\Weapons\LaserWeapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\Missle.cs" />
-     <Compile Include="Assets\Scripts\Weapons\Projectile.cs" />
      <Compile Include="Assets\Scripts\Weapons\ProjectileWeapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\Weapons.cs" />
