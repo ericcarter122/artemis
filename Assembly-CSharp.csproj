@@ -53,6 +53,8 @@
      <Compile Include="Assets\Scripts\Lighting\LaunchTube.cs" />
      <Compile Include="Assets\Scripts\Navigation\Navigation.cs" />
      <Compile Include="Assets\Scripts\Navigation\TowerBeacon.cs" />
+     <Compile Include="Assets\Scripts\Particle System\SpaceDust.cs" />
+     <Compile Include="Assets\Scripts\Particle System\Thruster.cs" />
      <Compile Include="Assets\Scripts\Targeting\Infrared.cs" />
      <Compile Include="Assets\Scripts\Targeting\Radar.cs" />
      <Compile Include="Assets\Scripts\Weapons\LaserWeapon.cs" />

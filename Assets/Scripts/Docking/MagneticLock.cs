@@ -12,9 +12,16 @@ public class MagneticLock : MonoBehaviour {
 		}
 	}
 
-	void Dock(Rigidbody rb) {
-		clamp = gameObject.AddComponent<FixedJoint>() as FixedJoint;
-		clamp.connectedBody = rb;
+	void Dock(Rigidbody connectedBody) {
+		if (connectedBody != null) {
+			
+			transform.up = connectedBody.transform.up;
+			transform.right = connectedBody.transform.right;
+			transform.forward = connectedBody.transform.forward;
+
+			clamp = gameObject.AddComponent<FixedJoint>() as FixedJoint;
+			clamp.connectedBody = connectedBody;
+		}
 	}
 
 	void UnDock() {

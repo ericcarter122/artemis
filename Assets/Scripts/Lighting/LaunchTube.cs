@@ -58,13 +58,6 @@ public class LaunchTube : MonoBehaviour {
 
 	IEnumerator PrepareLaunch() {
 
-		while (Camera.main.transform.localRotation.eulerAngles.y > 0 && Camera.main.transform.localRotation.eulerAngles.y < 91) {
-			Camera.main.transform.Rotate (-transform.up * 0.75F);
-			yield return null;
-		}
-
-		Camera.main.transform.rotation = Quaternion.identity;
-
 		yield return new WaitForSeconds (2F);
 
 		while (Vector3.Distance (rb.position, launchPad.position) > 0.1F) {
