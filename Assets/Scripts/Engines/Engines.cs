@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Engines : MonoBehaviour {
@@ -11,7 +12,13 @@ public class Engines : MonoBehaviour {
 	public bool rcsStabalization = true;
 	public bool inertialDampener = true;
 
+	public Canvas HUD;
+	public Slider velocitySlider;
+	public Text velocityText;
+	public Image progradeVector;
+
     Rigidbody rb;
+	Vector3 relativeVelocity;
 
     float horizontal;
     float lateral;
@@ -24,6 +31,7 @@ public class Engines : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
+		relativeVelocity = new Vector3 ();
 	}
 
     void Update() {
@@ -51,9 +59,9 @@ public class Engines : MonoBehaviour {
 		torque.y = yaw * angularThrust;
 		torque.z = roll * angularThrust;
 	
-		Vector3 relativeVelocity = transform.InverseTransformDirection (rb.velocity);
+		relativeVelocity = transform.InverseTransformDirection (rb.velocity);
 
-		// RCSTAB
+		// RCSSTAB
 		if (rcsStabalization) {
 			
 			float angle = Vector3.Angle (transform.forward, relativeVelocity);

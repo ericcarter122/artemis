@@ -45,16 +45,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Components\Engines.cs" />
-     <Compile Include="Assets\Scripts\Components\Shields.cs" />
      <Compile Include="Assets\Scripts\Docking\MagneticLock.cs" />
-     <Compile Include="Assets\Scripts\Input\InputController.cs" />
+     <Compile Include="Assets\Scripts\Engines\Engines.cs" />
+     <Compile Include="Assets\Scripts\HUD\HUD.cs" />
      <Compile Include="Assets\Scripts\Jamming\Jammer.cs" />
      <Compile Include="Assets\Scripts\Lighting\LaunchTube.cs" />
      <Compile Include="Assets\Scripts\Navigation\Navigation.cs" />
      <Compile Include="Assets\Scripts\Navigation\TowerBeacon.cs" />
      <Compile Include="Assets\Scripts\Particle System\SpaceDust.cs" />
      <Compile Include="Assets\Scripts\Particle System\Thruster.cs" />
+     <Compile Include="Assets\Scripts\Shields\Shields.cs" />
      <Compile Include="Assets\Scripts\Targeting\Infrared.cs" />
      <Compile Include="Assets\Scripts\Targeting\Radar.cs" />
      <Compile Include="Assets\Scripts\Weapons\LaserWeapon.cs" />
