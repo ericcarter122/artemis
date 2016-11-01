@@ -1,12 +1,23 @@
 # =============== #
 # Unity generated #
 # =============== #
-[Tt]emp/
-[Oo]bj/
-[Bb]uild
 /[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/Assets/AssetStoreTools*
+
+
+# Unity3D generated meta files
+*.pidb.meta
+
+# Unity3D Generated File On Crash Reports
 sysinfo.txt
-*.stackdump
+
+# Builds
+*.apk
+*.unitypackage
  
 # ============================================= #
 # Visual Studio / MonoDevelop / Rider generated #

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEditor;
 
-[CustomEditor (typeof(Jammer))]
+[CustomEditor(typeof(Jammer))]
 public class JammerEditor : Editor {
 
 	public float range;
