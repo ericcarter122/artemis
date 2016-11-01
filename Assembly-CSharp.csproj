@@ -48,8 +48,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Controllers\PID.cs" />
+     <Compile Include="Assets\Scripts\Controllers\PIDTest.cs" />
      <Compile Include="Assets\Scripts\Docking\MagneticLock.cs" />
      <Compile Include="Assets\Scripts\Engines\Engines.cs" />
+     <Compile Include="Assets\Scripts\Engines\IThruster.cs" />
      <Compile Include="Assets\Scripts\HUD\HUD.cs" />
      <Compile Include="Assets\Scripts\Jamming\Jammer.cs" />
      <Compile Include="Assets\Scripts\Lighting\LaunchTube.cs" />
