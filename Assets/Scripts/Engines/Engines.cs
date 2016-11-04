@@ -1,107 +1,99 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Engines : MonoBehaviour {
 
-    public float thrust;
-    public float angularThrust;
-	public float maxSpeed;
+	//public List<IThruster> thrusters;
 
-	public bool rcsStabalization = true;
-	public bool inertialDampener = true;
+	public float maxSpeed, maxAngularSpeed;
+	public float maxThrust, maxAngularThrust;
 
-	public Canvas HUD;
-	public Slider velocitySlider;
-	public Text velocityText;
-	public Image progradeVector;
+	[Range(0, 10.0F)]
+	public float kP, kI, kD;
+
+	// public bool rcsStabalization = true;
+	public bool flightAssistToggle = true;
 
     Rigidbody rb;
-	Vector3 relativeVelocity;
 
-    float horizontal;
-    float lateral;
-    float vertical;
+	Vector3 translational;
+	PidController3Axis translationalPid;
+    float horizontal, lateral, vertical;
 
-    float roll;
-    float pitch;
-    float yaw;
+	Vector3 rotational;
+	PidController3Axis rotationalPid;
+    float roll, pitch, yaw;
+
+	Vector3 localAngularVelocity;
+	Vector3 localVelocity;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
-		relativeVelocity = new Vector3 ();
+		localAngularVelocity = new Vector3();
+		localVelocity = new Vector3();
+
+		translational = new Vector3();
+		rotational = new Vector3();
+		
+		translationalPid = new PidController3Axis(kP, kI, kD);
+		translationalPid.outputMax = maxThrust;
+
+		rotationalPid = new PidController3Axis(kP, kI, kD);
+		rotationalPid.outputMax = maxAngularThrust;
 	}
 
+	// Get input from axes to control thrusters
     void Update() {
-        horizontal = Input.GetAxis("Horizontal");
+		horizontal = Input.GetAxis("Horizontal");
         lateral = Input.GetAxis("Lateral");
         vertical = Input.GetAxis("Vertical");
-
         pitch = Input.GetAxis("Pitch");
         yaw = Input.GetAxis("Yaw");
         roll = Input.GetAxis("Roll");
+
+		translationalPid.SetGains(kP, kI, kD);
+		rotationalPid.SetGains(kP, kI, kD);
+
+		translationalPid.enabled = flightAssistToggle;
     }
 	
 	// Used for rigidbody physics calculations
 	void FixedUpdate () {
 
-		Vector3 force = new Vector3 ();
-		Vector3 torque = new Vector3 ();
+		translational = new Vector3(horizontal, lateral, vertical);
+		rotational = new Vector3(pitch, yaw, roll);
 
-		// Get initial input
-		force.x = horizontal * thrust;
-		force.y = lateral * thrust;
-		force.z = vertical * thrust;
+		// Calculate local angular/translational velocity, as velocity is in world space
+		localAngularVelocity = transform.InverseTransformDirection(rb.angularVelocity);
+		localVelocity = transform.InverseTransformDirection(rb.velocity);
 
-		torque.x = pitch * angularThrust;
-		torque.y = yaw * angularThrust;
-		torque.z = roll * angularThrust;
-	
-		relativeVelocity = transform.InverseTransformDirection (rb.velocity);
+		// Set PID targets and calculate ouput for rotational axes
+		rotationalPid.SetTarget(rotational * maxAngularSpeed);
+		var rotationalOutput = rotationalPid.Update(new Vector3(
+			localAngularVelocity.x,
+			localAngularVelocity.y,
+			localAngularVelocity.z
+		));
 
-		// RCSSTAB
-		if (rcsStabalization) {
-			
-			float angle = Vector3.Angle (transform.forward, relativeVelocity);
+		rb.AddRelativeTorque(Vector3.right * rotationalOutput.x);
+		rb.AddRelativeTorque(Vector3.up * rotationalOutput.y);
+		rb.AddRelativeTorque(Vector3.forward * rotationalOutput.z);
 
-			if (!force.Equals (Vector3.zero) && angle > 0) {
-				if (force.x == 0)
-					force.x = -Mathf.Sign (relativeVelocity.x) * thrust;
-				if (force.y == 0)
-					force.y = -Mathf.Sign (relativeVelocity.y) * thrust;
-				if (force.z == 0)
-					force.z = -Mathf.Sign (relativeVelocity.z) * thrust;
-			}
+		rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, maxAngularSpeed);
 
-		}
+		// Set PID targets and calculate ouput for translational axes
+		translationalPid.SetTarget(translational * maxSpeed);
+		var translationalOutput = translationalPid.Update(new Vector3(
+			localVelocity.x,
+			localVelocity.y,
+			localVelocity.z
+		));
 
-		// Inertial Dampeners
-		if (inertialDampener) {
-			if (force.x == 0)
-				force.x = -Mathf.Sign (relativeVelocity.x) * thrust;
-			if (force.y == 0)
-				force.y = -Mathf.Sign (relativeVelocity.y) * thrust;
-			if (force.z == 0)
-				force.z = -Mathf.Sign (relativeVelocity.z) * thrust;
-		}
+		rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 
-		// Finalize vectors
-		rb.AddForce (transform.right * force.x);
-		rb.AddForce (transform.up * force.y);
-		rb.AddForce (transform.forward * force.z);
-
-		rb.AddTorque (transform.right * pitch * angularThrust);
-		rb.AddTorque (transform.up * yaw * angularThrust);
-		rb.AddTorque (transform.forward * roll * angularThrust);
-
-		Debug.DrawLine (transform.position, force + transform.position, Color.red);
-		Debug.DrawLine (transform.position, transform.forward + transform.position, Color.green);
-		Debug.DrawLine (transform.position, rb.velocity + transform.position, Color.yellow);
-
-		if (rb.velocity.magnitude > maxSpeed) {
-			rb.velocity = rb.velocity.normalized * maxSpeed;
-		}
+		rb.AddRelativeForce(Vector3.right * translationalOutput.x);
+		rb.AddRelativeForce(Vector3.up * translationalOutput.y);
+		rb.AddRelativeForce(Vector3.forward * translationalOutput.z);
     }
 }
