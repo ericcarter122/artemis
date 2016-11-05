@@ -3,7 +3,8 @@
 [RequireComponent(typeof(Rigidbody))]
 public class Engines : MonoBehaviour {
 
-	//public List<IThruster> thrusters;
+	// TODO: implement multiple modeled thrusters (main, cold gas)
+	public Thruster[] thrusters;
 
 	public float maxSpeed, maxAngularSpeed;
 	public float maxThrust, maxAngularThrust;
@@ -11,7 +12,6 @@ public class Engines : MonoBehaviour {
 	[Range(0, 10.0F)]
 	public float kP, kI, kD;
 
-	// public bool rcsStabalization = true;
 	public bool flightAssistToggle = true;
 
     Rigidbody rb;
