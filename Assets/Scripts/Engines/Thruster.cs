@@ -1,19 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class Thruster : MonoBehaviour{
-    public enum ThusterType { nitrogen, hydrogen };
+public class Thruster : MonoBehaviour {
+    public enum ThrusterType { nitrogen, hydrogen };
 
+    public ThrusterType type;
     public float maxThrust;
 
-    Rigidbody rb;
-
-    public void Start() {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    public void AddForce(Vector3 force) {
-        rb.AddForceAtPosition(force, transform.position);
+    public void AddForce(Rigidbody rb, float forcePercentage) {
+        Mathf.Clamp(forcePercentage, -1, 1);
+        rb.AddForceAtPosition(-transform.forward * forcePercentage * maxThrust, transform.position);
     }
 
     // TODO: add animation/particle effects per thruster

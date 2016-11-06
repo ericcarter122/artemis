@@ -6,7 +6,6 @@ public class PidController3Axis {
     public Vector3 kP, kI, kD;
     public Vector3 target;
     public Vector3 lastError, errorSum;
-    public float outputMax;
     public bool enabled;
 
     public PidController3Axis(float kP, float kI, float kD) {
@@ -40,9 +39,6 @@ public class PidController3Axis {
 
 		// Compute PID output
 		var output = Vector3.Scale(kP, error) + Vector3.Scale(kI, errorSum) + Vector3.Scale(kD, dError);
-
-        // Limit output from correction
-        output = Vector3.ClampMagnitude(output, outputMax);
 
 		lastError = error;
 		return output;
