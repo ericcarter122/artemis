@@ -8,7 +8,6 @@ public class Engines : MonoBehaviour {
 
 	public float maxSpeed, maxAngularSpeed;
 
-	[Range(0, Mathf.Infinity)]
 	public float kP, kI, kD;
 
 	public bool flightAssistToggle = true;
@@ -36,8 +35,9 @@ public class Engines : MonoBehaviour {
 		rotational = new Vector3();
 		
 		translationalPid = new PidController3Axis(kP, kI, kD);
-
 		rotationalPid = new PidController3Axis(kP, kI, kD);
+
+		thrusters = gameObject.GetComponentsInChildren<Thruster>();
 	}
 
 	// Get input from axes to control thrusters
@@ -59,6 +59,7 @@ public class Engines : MonoBehaviour {
 		rotational = new Vector3(pitch, yaw, roll);
 
 		Debug.DrawLine(transform.position, transform.position + translational, Color.red);
+		Debug.DrawLine(transform.position, transform.position + rotational, Color.green);
 
 		localVelocity = transform.InverseTransformDirection(rb.velocity);
 
@@ -72,20 +73,18 @@ public class Engines : MonoBehaviour {
 
 		ThrusterController.ApplyForce(rb, translationalOutput, thrusters);
 
-		// // Calculate local angular/translational velocity, as velocity is in world space
-		// localAngularVelocity = transform.InverseTransformDirection(rb.angularVelocity);
+		// Calculate local angular/translational velocity, as velocity is in world space
+		localAngularVelocity = transform.InverseTransformDirection(rb.angularVelocity);
 
-		// // Set PID targets and calculate ouput for rotational axes
-		// rotationalPid.SetTarget(rotational * maxAngularSpeed);
-		// var rotationalOutput = rotationalPid.Update(new Vector3(
-		// 	localAngularVelocity.x,
-		// 	localAngularVelocity.y,
-		// 	localAngularVelocity.z
-		// ));
+		// Set PID targets and calculate ouput for rotational axes
+		rotationalPid.SetTarget(rotational * maxAngularSpeed);
+		var rotationalOutput = rotationalPid.Update(new Vector3(
+			localAngularVelocity.x,
+			localAngularVelocity.y,
+			localAngularVelocity.z
+		));
 
-		// rb.AddRelativeTorque(Vector3.right * rotationalOutput.x);
-		// rb.AddRelativeTorque(Vector3.up * rotationalOutput.y);
-		// rb.AddRelativeTorque(Vector3.forward * rotationalOutput.z);
+		ThrusterController.ApplyTorque(rb, rotationalOutput, thrusters);
 
 		rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, maxAngularSpeed);
