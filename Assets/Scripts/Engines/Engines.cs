@@ -58,10 +58,9 @@ public class Engines : MonoBehaviour {
 		translational = new Vector3(horizontal, lateral, vertical);
 		rotational = new Vector3(pitch, yaw, roll);
 
-		Debug.DrawLine(transform.position, transform.position + translational, Color.red);
-		Debug.DrawLine(transform.position, transform.position + rotational, Color.green);
-
-		localVelocity = transform.InverseTransformDirection(rb.velocity);
+        // Calculate local angular/translational velocity, as velocity is in world space
+        localVelocity = transform.InverseTransformDirection(rb.velocity);
+        localAngularVelocity = transform.InverseTransformDirection(rb.angularVelocity);
 
 		// Set PID targets and calculate ouput for translational axes
 		translationalPid.SetTarget(translational * maxSpeed);
@@ -71,10 +70,7 @@ public class Engines : MonoBehaviour {
 			localVelocity.z
 		));
 
-		ThrusterController.ApplyForce(rb, translationalOutput, thrusters);
-
-		// Calculate local angular/translational velocity, as velocity is in world space
-		localAngularVelocity = transform.InverseTransformDirection(rb.angularVelocity);
+		ThrusterController.ApplyForce(rb, translationalOutput, thrusters);	
 
 		// Set PID targets and calculate ouput for rotational axes
 		rotationalPid.SetTarget(rotational * maxAngularSpeed);
