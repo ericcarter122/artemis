@@ -6,6 +6,8 @@ public class Engines : MonoBehaviour {
 	// TODO: implement multiple modeled thrusters (main, cold gas)
 	public Thruster[] thrusters;
 
+	public float maxThrust, maxAngularThrust;
+
 	public float maxSpeed, maxAngularSpeed;
 
 	public float kP, kI, kD;
@@ -70,7 +72,10 @@ public class Engines : MonoBehaviour {
 			localVelocity.z
 		));
 
-		ThrusterController.ApplyForce(rb, translationalOutput, thrusters);	
+		//ThrusterController.ApplyForce(rb, translationalOutput, thrusters);
+		rb.AddRelativeForce(Vector3.right * translationalOutput.x * maxThrust);
+		rb.AddRelativeForce(Vector3.up * translationalOutput.y * maxThrust);
+		rb.AddRelativeForce(Vector3.forward * translationalOutput.z * maxThrust);	
 
 		// Set PID targets and calculate ouput for rotational axes
 		rotationalPid.SetTarget(rotational * maxAngularSpeed);
@@ -80,7 +85,10 @@ public class Engines : MonoBehaviour {
 			localAngularVelocity.z
 		));
 
-		ThrusterController.ApplyTorque(rb, rotationalOutput, thrusters);
+		//ThrusterController.ApplyTorque(rb, rotationalOutput, thrusters);
+		rb.AddRelativeTorque(Vector3.right * rotationalOutput.x * maxAngularThrust);
+		rb.AddRelativeTorque(Vector3.up * rotationalOutput.y * maxAngularThrust);
+		rb.AddRelativeTorque(Vector3.forward * rotationalOutput.z * maxAngularThrust);
 
 		rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 		rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, maxAngularSpeed);
