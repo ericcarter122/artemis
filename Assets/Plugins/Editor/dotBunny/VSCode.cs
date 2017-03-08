@@ -441,7 +441,7 @@ namespace dotBunny.Unity
             }
 
 #if UNITY_EDITOR_OSX
-            proc.StartInfo.FileName = "open";
+            proc.StartInfo.FileName = "code.cmd";
 
             // Check the path to see if there is "Insiders"
             if (CodePath.Contains("Insiders"))
@@ -466,7 +466,13 @@ namespace dotBunny.Unity
             proc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             proc.StartInfo.CreateNoWindow = true;
             proc.StartInfo.RedirectStandardOutput = true;
-            proc.Start();
+            try {
+                proc.Start();
+            } catch (System.ComponentModel.Win32Exception e){
+                UnityEngine.Debug.LogException(e);
+                UnityEngine.Debug.LogError("NativeErrorCode: " + e.NativeErrorCode.ToString() 
+                + " see https://msdn.microsoft.com/en-us/library/windows/desktop/ms681381%28v=vs.85%29.aspx for error code reference");
+            }
         }
 
         /// <summary>
