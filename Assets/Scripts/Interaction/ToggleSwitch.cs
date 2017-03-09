@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class ToggleSwitch : MonoBehaviour, Interactable {
 
-	public float deltaAngle = 60;
-	private Vector3 axis;
+	public GameObject switchHandle;
+	public GameObject rotateAround;
+	public float deltaAngle = 30;
 	private bool toggled = false;
 
-	public void Start() {
-		axis = transform.right;
-	}
-
 	public void OnClick() {
-		float angle = 0;
-		transform.rotation.ToAngleAxis(out angle, out axis);
+		Transform t = switchHandle.transform;
 		if (!toggled) {
-			transform.rotation = Quaternion.AngleAxis(angle + deltaAngle, axis);
+			t.RotateAround(rotateAround.transform.position, t.right, deltaAngle);
 		} else {
-			transform.rotation = Quaternion.AngleAxis(angle - deltaAngle, axis);;
+			t.RotateAround(rotateAround.transform.position, t.right, -deltaAngle);
 		}
 		toggled = !toggled;
 	}

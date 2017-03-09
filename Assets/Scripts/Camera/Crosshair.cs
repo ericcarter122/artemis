@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class Crosshair : MonoBehaviour {
 
+	public int size = 6;
+
+	public Color color = Color.green;
+
 	private Texture2D crosshairTex;
 	private Vector2 windowSize;
 	private Rect crosshairRect;
 
 	// Use this for initialization
 	void Start () {
-		crosshairTex = new Texture2D(2, 2);
+		crosshairTex = new Texture2D(size, size);
 		windowSize = new Vector2(Screen.width, Screen.height);
+
+		for (int y = 0; y < crosshairTex.height; y++) {
+			for (int x = 0; x < crosshairTex.width; x++) {
+				crosshairTex.SetPixel(x, y, color);
+			}
+		}
+ 
+		crosshairTex.Apply();
+
 		CalculateRect();
 	}
 	
@@ -29,7 +42,7 @@ public class Crosshair : MonoBehaviour {
 			crosshairTex.width, crosshairTex.height);
 	}
 
-	void OnGui() {
+	void OnGUI() {
 		GUI.DrawTexture(crosshairRect, crosshairTex);
 	}
 }
