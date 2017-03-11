@@ -59,4 +59,6 @@ public class Freelook : MonoBehaviour {
         }
         return Mathf.Clamp(angle, min, max);
     }
+
+    // todo: set the freelook to center with originalRotation
 }
