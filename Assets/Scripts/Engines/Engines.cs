@@ -3,7 +3,6 @@
 [RequireComponent(typeof(Rigidbody))]
 public class Engines : MonoBehaviour {
 
-	// TODO: implement multiple modeled thrusters (main, cold gas)
 	public Thruster[] thrusters;
 
 	public float maxThrust, maxAngularThrust;
