@@ -1,21 +1,24 @@
 using UnityEngine;
 public static class ThrusterController {
-    public static void ApplyForce(Rigidbody rb, Vector3 input, Thruster[] thrusters, float threshold = -0.5F) {
+
+	// For dot product checks on 45 deg angles
+	static readonly float THREASHOLD = -0.5F;
+
+    public static void ApplyForce(Rigidbody rb, Vector3 input, Thruster[] thrusters) {
         
 		// Iterate through all thrusters
 		for (int i = 0; i < thrusters.Length; i++) {
 
 			// If the thruster is in the direction of the input, we want to fire it
-			if (Vector3.Dot(input.normalized, thrusters[i].transform.forward.normalized) <= threshold) {
+			float dot = Vector3.Dot(input.normalized, thrusters[i].transform.forward.normalized);
+			if (dot <= THREASHOLD) {
 				// Add force to the thruster equal to the magnitude of the input vector
 				thrusters[i].AddForce(rb, input.magnitude);
 			}
 		}
     }
 
-	// TODO: fix issue where threshold has to be negative (probably why it wiggles)
-
-    public static void ApplyTorque(Rigidbody rb, Vector3 input, Thruster[] thrusters, float threshold = -0.5F) {
+    public static void ApplyTorque(Rigidbody rb, Vector3 input, Thruster[] thrusters) {
         
 		// Iterate through all thrusters
 		for (int i = 0; i < thrusters.Length; i++) {
@@ -25,7 +28,8 @@ public static class ThrusterController {
             Vector3 cross = Vector3.Cross(dist, thrusters[i].transform.forward);
 
 			// If the thruster is orthogonal to a direction, use it to create torque in that direction
-			if (Vector3.Dot(input.normalized, cross.normalized) <= threshold) {
+			float dot = Vector3.Dot(input.normalized, cross.normalized);
+			if (dot <= THREASHOLD) {
 				// Add force to the thruster equal to the magnitude of the input vector
                 thrusters[i].AddForce(rb, input.magnitude);
             }
