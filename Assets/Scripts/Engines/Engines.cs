@@ -9,7 +9,7 @@ public class Engines : MonoBehaviour {
 
 	public float kP, kI, kD;
 
-	public bool flightAssistToggle = true;
+	public bool PIDToggle = true;
 
     Rigidbody rb;
 
@@ -21,14 +21,9 @@ public class Engines : MonoBehaviour {
 	PidController3Axis rotationalPid;
 	Vector3 roll, pitch, yaw;
 
-	Vector3 localAngularVelocity;
-	Vector3 localVelocity;
-
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
-		localAngularVelocity = new Vector3();
-		localVelocity = new Vector3();
 
 		translational = new Vector3();
 		rotational = new Vector3();
@@ -49,7 +44,7 @@ public class Engines : MonoBehaviour {
 		yaw = Input.GetAxis("Yaw") * transform.up;
 		roll = Input.GetAxis("Roll") * transform.forward;
 
-		translationalPid.enabled = flightAssistToggle;
+		translationalPid.enabled = PIDToggle;
     }
 	
 	// Used for rigidbody physics calculations
