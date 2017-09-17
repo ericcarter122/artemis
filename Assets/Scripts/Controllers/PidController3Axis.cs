@@ -1,5 +1,5 @@
 using UnityEngine;
-public class PidController3Axis {
+public class PIDController3Axis {
 
     public float timeInterval;
 
@@ -8,7 +8,7 @@ public class PidController3Axis {
     public Vector3 lastError, errorSum;
     public bool enabled;
 
-    public PidController3Axis(float kP, float kI, float kD) {
+    public PIDController3Axis(float kP, float kI, float kD) {
         this.kP = new Vector3(kP, kP, kP);
         this.kI = new Vector3(kI, kI, kI);
         this.kD = new Vector3(kD, kD, kD);

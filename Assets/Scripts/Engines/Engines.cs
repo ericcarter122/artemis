@@ -14,11 +14,11 @@ public class Engines : MonoBehaviour {
     Rigidbody rb;
 
 	Vector3 translational;
-	PidController3Axis translationalPid;
+	PIDController3Axis translationalPid;
     Vector3 horizontal, lateral, vertical;
 
 	Vector3 rotational;
-	PidController3Axis rotationalPid;
+	PIDController3Axis rotationalPid;
 	Vector3 roll, pitch, yaw;
 
 	// Use this for initialization
@@ -28,8 +28,8 @@ public class Engines : MonoBehaviour {
 		translational = new Vector3();
 		rotational = new Vector3();
 		
-		translationalPid = new PidController3Axis(kP, kI, kD);
-		rotationalPid = new PidController3Axis(kP, kI, kD);
+		translationalPid = new PIDController3Axis(kP, kI, kD);
+		rotationalPid = new PIDController3Axis(kP, kI, kD);
 
 		thrusters = gameObject.GetComponentsInChildren<Thruster>();
 	}
